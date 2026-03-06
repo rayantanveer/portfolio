@@ -1,4 +1,4 @@
-# AGENT_CONTEXT.md
+# ARCHITECTURE.md
 
 This document is the complete architectural and design context for this project.
 Read it in full before acting on any mission brief.
