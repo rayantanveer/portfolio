@@ -44,6 +44,10 @@ The portfolio simultaneously IS the project demonstrating RAG.
 5. shadcn/ui components are added only as needed — never bulk-installed.
 6. Every API route returns a typed error shape and the correct HTTP status code.
 7. No default exports from component files except for Next.js pages and layouts.
+8. Tailwind v4 is in use. All design tokens and shadcn semantic colors are
+   configured in app/globals.css via @theme inline {}. Do not create or
+   reference tailwind.config.ts — it does not exist.
+
 
 ---
 
@@ -155,7 +159,7 @@ portfolio/
 ├── .env.example            # Committed
 ├── wrangler.jsonc          # Cloudflare Workers config
 ├── next.config.ts
-├── tailwind.config.ts      # Codex design tokens defined here
+├── app/globals.css         # Codex design tokens live here via @theme inline {} # Tailwind v4 installed — no tailwind.config.ts
 ├── tsconfig.json
 └── README.md
 
