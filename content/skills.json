@@ -1,0 +1,107 @@
+[
+    {
+        "id": "javascript",
+        "name": "JavaScript",
+        "category": "Frontend",
+        "proficiency": "strong",
+        "description": "Foundational language across all projects. Built the Unified Content Dashboard entirely in vanilla JS — manual state management, re-rendering, and algorithm design without any framework abstractions."
+    },
+    {
+        "id": "typescript",
+        "name": "TypeScript",
+        "category": "Frontend",
+        "proficiency": "comfortable",
+        "description": "Primary language in the AI portfolio project. Strict mode enforced throughout — typed API routes, component props, database rows, and environment variables."
+    },
+    {
+        "id": "react",
+        "name": "React",
+        "category": "Frontend",
+        "proficiency": "strong",
+        "description": "Core UI library across multiple projects including Shop Me, Car Rental, and EduHelp. Component architecture, hooks, and lifecycle management."
+    },
+    {
+        "id": "nextjs",
+        "name": "Next.js",
+        "category": "Frontend",
+        "proficiency": "comfortable",
+        "description": "App Router, co-located API routes, and server components — used in the AI portfolio project. Focus on the API route layer as the server-side boundary for all AI and database calls."
+    },
+    {
+        "id": "tailwindcss",
+        "name": "TailwindCSS",
+        "category": "Frontend",
+        "proficiency": "strong",
+        "description": "Utility-first styling across Shop Me, Car Rental, and the AI portfolio. Used alongside shadcn/ui for a production-quality component system."
+    },
+    {
+        "id": "redux",
+        "name": "Redux / Redux Toolkit",
+        "category": "Frontend",
+        "proficiency": "comfortable",
+        "description": "State management in Shop Me and Car Rental — slices, async thunks, and store architecture."
+    },
+    {
+        "id": "html-css",
+        "name": "HTML & CSS",
+        "category": "Frontend",
+        "proficiency": "strong",
+        "description": "Foundation of the Unified Content Dashboard — semantic HTML structure, custom CSS for the vintage aesthetic, and layout without any framework."
+    },
+    {
+        "id": "python",
+        "name": "Python",
+        "category": "Backend",
+        "proficiency": "comfortable",
+        "description": "Primary language for EduHelp — the full AI-powered RAG assistant backend was built in Python."
+    },
+    {
+        "id": "nodejs",
+        "name": "Node.js",
+        "category": "Backend",
+        "proficiency": "comfortable",
+        "description": "Backend API routes in the AI portfolio project — contact form, chat endpoint, and feedback logging."
+    },
+    {
+        "id": "rag-pipelines",
+        "name": "RAG Pipelines",
+        "category": "AI/ML",
+        "proficiency": "comfortable",
+        "description": "Implemented full RAG pipelines in both EduHelp and the AI portfolio — covering chunking strategy, embedding generation, vector retrieval, grounded synthesis, and source citation."
+    },
+    {
+        "id": "gemini-api",
+        "name": "Gemini API",
+        "category": "AI/ML",
+        "proficiency": "comfortable",
+        "description": "Used for embeddings (text-embedding-004) and LLM responses (Gemini 2.5 Flash) in the AI portfolio. Both calls handled server-side via Next.js API routes."
+    },
+    {
+        "id": "supabase",
+        "name": "Supabase / pgvector",
+        "category": "Database",
+        "proficiency": "learning",
+        "description": "Vector store for Proxenos embeddings and feedback logging in the AI portfolio. Row-level security configured to separate public read operations from service-role writes."
+    },
+    {
+        "id": "git-github",
+        "name": "Git / GitHub",
+        "category": "Tools",
+        "proficiency": "comfortable",
+        "description": "Version control across all projects. Conventional commits, feature branching, and GitHub Actions for CI/CD and automated embed pipeline."
+    },
+    {
+        "id": "cloudflare-workers",
+        "name": "Cloudflare Workers",
+        "category": "DevOps",
+        "proficiency": "learning",
+        "description": "Deployment target for the AI portfolio via the OpenNext adapter. Global edge delivery with unlimited bandwidth on the free tier."
+    },
+    {
+        "id": "github-actions",
+        "name": "GitHub Actions",
+        "category": "DevOps",
+        "proficiency": "comfortable",
+        "description": "CI/CD pipeline for the AI portfolio — auto-deploy to Cloudflare Workers on push to main, and automated embed script trigger on content changes."
+    }
+]
