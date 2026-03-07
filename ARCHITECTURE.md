@@ -47,6 +47,11 @@ The portfolio simultaneously IS the project demonstrating RAG.
 8. Tailwind v4 is in use. All design tokens and shadcn semantic colors are
    configured in app/globals.css via @theme inline {}. Do not create or
    reference tailwind.config.ts — it does not exist.
+9. Server and client components cannot coexist in the same file.
+   If a server component needs a client sub-component, extract the client
+   component into a sibling file and import it. Never make an entire parent
+   component a client component just to accommodate one interactive child.
+ 
 
 
 ---
@@ -116,6 +121,7 @@ portfolio/
 ├── components/
 │   ├── ui/                 # shadcn/ui only
 │   ├── layout/
+│   │   ├── contact-form.tsx
 │   │   ├── header.tsx
 │   │   ├── footer.tsx      # Contact form + social links
 │   │   └── nav.tsx
