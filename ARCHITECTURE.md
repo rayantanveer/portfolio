@@ -51,8 +51,10 @@ The portfolio simultaneously IS the project demonstrating RAG.
    If a server component needs a client sub-component, extract the client
    component into a sibling file and import it. Never make an entire parent
    component a client component just to accommodate one interactive child.
- 
-
+10. Proxenos open/close state is managed via ProxenosContext
+   (components/proxenos/proxenos-context.tsx).
+   Any client component that needs to open or close Proxenos
+   consumes useProxenos() — never prop-drills through server components.
 
 ---
 
