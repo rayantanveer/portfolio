@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { LayoutClient } from "@/components/layout/layout-client";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -29,7 +30,7 @@ export default function RootLayout({
             className={`dark ${instrumentSerif.variable} ${GeistSans.variable} ${GeistMono.variable}`}
         >
             <body className="bg-codex-black text-codex-cream antialiased">
-                {children}
+                <LayoutClient>{children}</LayoutClient>
             </body>
         </html>
     );

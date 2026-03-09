@@ -113,3 +113,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* --- Prose styles for rendered Markdown content --- */
+.prose-codex h2 {
+  font-family: var(--font-instrument-serif);
+  color: #F5F0E8;
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-codex p {
+  color: #C8C3BB;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.prose-codex ul {
+  color: #C8C3BB;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose-codex li {
+  margin-bottom: 0.5rem;
+}
+
+.prose-codex code {
+  font-family: var(--font-geist-mono);
+  font-size: 0.85em;
+  color: #E8A83E;
+  background: rgba(232, 168, 62, 0.08);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}

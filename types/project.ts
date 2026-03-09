@@ -20,4 +20,5 @@ export interface ProjectFrontmatter {
 
 export interface Project extends ProjectFrontmatter {
     content: string;
+    contentHtml: string;
 }
