@@ -9,12 +9,12 @@ const SOCIAL_LINKS = [
     },
     {
         label: "LinkedIn",
-        href: "https://linkedin.com/in/rayantanveer",
+        href: "https://linkedin.com/in/rayan-tanveer",
         icon: Linkedin,
     },
     {
         label: "Email",
-        href: "mailto:hello@rayantanveer.com",
+        href: "mailto:rayanjamie321@gmail.com",
         icon: Mail,
     },
 ];
