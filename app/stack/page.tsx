@@ -20,7 +20,7 @@ export default function StackPage() {
             </p>
             <SkillGrid
                 skillsByCategory={skillsByCategory}
-                showProficiency={true}
+                showProficiency={false}
             />
         </main>
     );

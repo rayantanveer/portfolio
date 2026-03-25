@@ -5,9 +5,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-    { label: "Work", href: "/projects" },
+    { label: "Projects", href: "/projects" },
     { label: "Stack", href: "/stack" },
-    { label: "About", href: "/about" },
 ];
 
 interface NavProps {
