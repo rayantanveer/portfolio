@@ -2,7 +2,7 @@
 name: "Rayan Tanveer"
 title: "Full Stack Developer"
 shortBio: "Full Stack Developer building at the intersection of product thinking and AI engineering."
-email: "rayantanveer.work@gmail.com"
+email: "rayanjamie321@gmail.com"
 github: "rayantanveer"
 linkedin: "www.linkedin.com/in/rayan-tanveer"
 ---

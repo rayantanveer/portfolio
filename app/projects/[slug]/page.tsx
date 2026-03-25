@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 href="/projects"
                 className="inline-block font-mono text-sm text-codex-amber mt-24 mb-8 hover:text-codex-amber/70 transition-colors"
             >
-                ← Work
+                ← Projects
             </Link>
 
             {/* Entry number */}

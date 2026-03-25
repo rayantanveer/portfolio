@@ -18,10 +18,11 @@ function Hero({ name, title, shortBio }: HeroProps) {
     const mouseY = useMotionValue(0);
     const { openProxenos } = useProxenos();
 
+    // Smaller, more concentrated gradient — 350px radius (was 600px), higher opacity centre
     const backgroundImage = useTransform(
         [mouseX, mouseY],
         ([x, y]) =>
-            `radial-gradient(600px at ${x}px ${y}px, rgba(232,168,62,0.06), transparent 80%)`
+            `radial-gradient(350px at ${x}px ${y}px, rgba(232,168,62,0.10), transparent 70%)`
     );
 
     function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
@@ -31,13 +32,24 @@ function Hero({ name, title, shortBio }: HeroProps) {
         mouseY.set(e.clientY - rect.top);
     }
 
+    // Touch support — bloom follows finger on mobile
+    function handleTouchMove(e: React.TouchEvent<HTMLElement>) {
+        if (!containerRef.current) return;
+        const touch = e.touches[0];
+        if (!touch) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        mouseX.set(touch.clientX - rect.left);
+        mouseY.set(touch.clientY - rect.top);
+    }
+
     return (
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
+            onTouchMove={handleTouchMove}
             className="relative min-h-screen flex flex-col justify-center px-6"
         >
-            {/* Cursor bloom overlay */}
+            {/* Cursor / touch bloom overlay */}
             <motion.div
                 className="pointer-events-none absolute inset-0 z-0"
                 style={{ backgroundImage }}
@@ -59,7 +71,7 @@ function Hero({ name, title, shortBio }: HeroProps) {
                         asChild
                         className="bg-codex-amber text-codex-black font-mono text-sm font-semibold hover:bg-codex-amber/90"
                     >
-                        <Link href="/projects">View Work</Link>
+                        <Link href="/projects">View Projects</Link>
                     </Button>
                     <Button
                         variant="ghost"
