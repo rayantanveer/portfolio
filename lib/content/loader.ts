@@ -2,7 +2,7 @@
 
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
+import fm from "front-matter";
 import { remark } from "remark";
 import html from "remark-html";
 import type { Project, ProjectFrontmatter } from "@/types/project";
@@ -28,13 +28,12 @@ export async function getAllProjects(): Promise<Project[]> {
         fileNames.map(async (fileName) => {
             const filePath = path.join(projectsDirectory, fileName);
             const fileContents = fs.readFileSync(filePath, "utf-8");
-            const { data, content } = matter(fileContents);
-            const frontmatter = data as ProjectFrontmatter;
-            const contentHtml = await renderMarkdown(content);
+            const { attributes, body } = fm<ProjectFrontmatter>(fileContents);
+            const contentHtml = await renderMarkdown(body);
 
             return {
-                ...frontmatter,
-                content,
+                ...attributes,
+                content: body,
                 contentHtml,
             };
         })
@@ -66,8 +65,8 @@ export async function getAllProjectSlugs(): Promise<string[]> {
     return fileNames.map((fileName) => {
         const filePath = path.join(projectsDirectory, fileName);
         const fileContents = fs.readFileSync(filePath, "utf-8");
-        const { data } = matter(fileContents);
-        return (data as ProjectFrontmatter).slug;
+        const { attributes } = fm<ProjectFrontmatter>(fileContents);
+        return attributes.slug;
     });
 }
 
@@ -75,12 +74,12 @@ export async function getAllProjectSlugs(): Promise<string[]> {
 export async function getAbout(): Promise<About & { contentHtml: string }> {
     const filePath = path.join(contentDirectory, "about.md");
     const fileContents = fs.readFileSync(filePath, "utf-8");
-    const { data, content } = matter(fileContents);
-    const contentHtml = await renderMarkdown(content);
+    const { attributes, body } = fm<Record<string, unknown>>(fileContents);
+    const contentHtml = await renderMarkdown(body);
 
     return {
-        ...(data as Omit<About, "content">),
-        content,
+        ...(attributes as Omit<About, "content">),
+        content: body,
         contentHtml,
     };
 }
