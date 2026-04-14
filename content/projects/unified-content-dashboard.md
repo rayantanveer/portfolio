@@ -4,7 +4,7 @@ title: "Unified Content Dashboard"
 status: "completed"
 featured: true
 year: 2026
-description: "A single-file vanilla JavaScript dashboard that consolidates seven types of fragmented digital content — from browser tabs to local documents — with a vintage analog aesthetic and a smart suggestions."
+description: "A single-file vanilla JavaScript dashboard that consolidates seven types of fragmented digital content, from browser tabs to local documents, with a vintage analog aesthetic and smart suggestions."
 coverImage: "/images/projects/unified-content-dashboard.png"
 liveUrl: "https://rayantanveer.github.io/unified-content-dashboard"
 githubUrl: "https://github.com/rayantanveer/unified-content-dashboard"
