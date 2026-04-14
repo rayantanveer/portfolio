@@ -12,6 +12,8 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      - name: Generate content
+        run: npx tsx scripts/generate-content.ts
       - run: npx @opennextjs/cloudflare build
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
