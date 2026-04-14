@@ -26,8 +26,10 @@ The portfolio simultaneously IS the project demonstrating RAG.
 | Styling          | TailwindCSS + shadcn/ui, mobile-first                 |
 | Deployment       | Cloudflare Workers via @opennextjs/cloudflare         |
 | Vector Store     | Supabase pgvector (free tier)                         |
-| Embeddings       | Gemini text-embedding-004 (server-side only)          |
-| LLM              | Gemini 2.5 Flash (server-side only)                   |
+| Embeddings       | Gemini gemini-embedding-001 (server-side only).       |
+|                  | output_dimensionality: 768 must be explicitly passed. |
+| LLM              | Gemini 2.5 Flash (server-side only).                  |
+|                  | Free tier limits: 10 RPM / 250 RPD.                   |
 | Email            | Resend (server-side only, footer contact form)        |
 | Content          | Git-based Markdown + JSON in /content directory       |
 
@@ -55,6 +57,10 @@ The portfolio simultaneously IS the project demonstrating RAG.
    (components/proxenos/proxenos-context.tsx).
    Any client component that needs to open or close Proxenos
    consumes useProxenos() — never prop-drills through server components.
+11. The /api/chat/route.ts route is streaming-first. It uses
+   generateContentStream() from the Gemini SDK and returns a
+   ReadableStream via new Response(stream). The blocking
+   generateContent() variant is never used for this route.
 
 ---
 
@@ -77,15 +83,35 @@ reinforce it. Do not substitute generic component defaults without flagging it.
 |                    | full-width reveals on hover                |
 | Interactions       | Deliberate weight, not snappy.             |
 |                    | Page-turn transitions, not quick fades.    |
-| Hero               | Cursor-following soft amber light bloom    |
+| Hero               | Cursor/touch-following amber bloom (350px  |
+|                    | radius, concentrated, 10% opacity centre). |
+|                    | Follows mouse on desktop, touch on mobile. |
 
 ---
 
 ## Proxenos — The RAG Assistant
 
-Proxenos is the embedded AI assistant. It slides in as a marginalia panel
-from the right edge of the screen. Its name appears in small-caps serif
+Proxenos is the embedded AI assistant. Its name appears in mono small-caps
 above the chat window.
+
+**Trigger:** A fixed floating amber orb (`bottom-6 right-6`) with a pulsing
+ping ring and "ASK" label. Disappears while the panel is open.
+
+**Panel (desktop ≥ 768px):** Fixed sidebar (`w-[420px]`) that slides in from
+the right with spring physics. Main page content shifts left via a
+`motion.div marginRight` animation — non-blocking, fully interactive behind
+the panel. Only applied on desktop; on mobile marginRight stays 0.
+
+**Panel (mobile < 768px):** Full-width panel starting below the fixed header
+(`top-16`) so the X close button is never obscured by the navbar.
+
+**Close:** X button in panel header, OR click/tap the semi-transparent
+backdrop (`z-30`) that covers the page behind the panel — works on both
+desktop and mobile.
+
+State is managed via `ProxenosContext` (`components/proxenos/proxenos-context.tsx`).
+Any client component that needs to open or close Proxenos consumes
+`useProxenos()` — never prop-drills.
 
 Behaviour rules:
 - Answers only from indexed portfolio content. Never from general knowledge.
@@ -107,15 +133,18 @@ Proxenos UI components: /components/proxenos/
 portfolio/
 ├── .github/workflows/
 │   ├── deploy.yml          # push to main → Cloudflare Workers
-│   └── embed.yml           # changes to content/** → re-run embed script
+│   ├── embed.yml           # changes to content/** → re-run embed script
+│   └── keepalive.yml       # scheduled 5-day cron; fires a read-only HTTP
+│                           # request against portfolio_embeddings (anon key)
+│                           # to prevent Supabase free-tier auto-pause.
+│                           # No Node.js setup or npm steps.
 ├── app/
 │   ├── layout.tsx
-│   ├── page.tsx            # Home
+│   ├── page.tsx            # Home — hero, Q&A about, education timeline
 │   ├── projects/
 │   │   ├── page.tsx
 │   │   └── [slug]/page.tsx
 │   ├── stack/page.tsx
-│   ├── about/page.tsx
 │   └── api/
 │       ├── chat/route.ts
 │       ├── feedback/route.ts
@@ -126,15 +155,19 @@ portfolio/
 │   │   ├── contact-form.tsx
 │   │   ├── header.tsx
 │   │   ├── footer.tsx      # Contact form + social links
+│   │   ├── hero.tsx
+│   │   ├── layout-client.tsx  # 'use client' — ProxenosProvider + margin animation
 │   │   └── nav.tsx
 │   ├── portfolio/
 │   │   ├── project-entry.tsx
 │   │   ├── project-grid.tsx
 │   │   ├── skill-badge.tsx
 │   │   ├── skill-grid.tsx
-│   │   └── education-card.tsx
+│   │   └── education-timeline.tsx  # Vertical timeline, hover/tap expand
 │   └── proxenos/
-│       ├── proxenos-panel.tsx
+│       ├── proxenos-context.tsx    # Context + Provider + useProxenos hook
+│       ├── proxenos-trigger.tsx    # Floating amber orb (fixed bottom-right)
+│       ├── proxenos-panel.tsx      # Push-content sidebar (desktop) / full-screen (mobile)
 │       ├── proxenos-message.tsx
 │       ├── source-citation.tsx
 │       └── feedback-buttons.tsx
@@ -186,14 +219,15 @@ See /content/projects/_template.md for the project authoring guide.
 
 ## Routes
 
-/                    Home — hero, featured projects, Proxenos CTA
+/                    Home — hero, selected projects, Q&A about section,
+                     education timeline (vertical, hover/tap-to-expand)
 /projects            All projects — numbered, editorial layout
 /projects/[slug]     Individual project case study
-/stack               Technical competencies by category
-/about               Bio, education card, building philosophy
+/stack               Technical competencies by category (no proficiency labels)
 Footer               Contact form (Resend) + social links, present on all pages
 
 No /contact page. Contact lives in the footer.
+No /about page. About content lives on the home page as a Q&A section.
 
 ---
 

@@ -1,0 +1,24 @@
+name: Supabase Keepalive
+
+on:
+  schedule:
+    # Runs every 5 days at 06:00 UTC
+    - cron: '0 6 */5 * *'
+  workflow_dispatch: # Allow manual trigger if needed
+
+jobs:
+  keepalive:
+    name: Ping portfolio_embeddings
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fire read-only request against portfolio_embeddings
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: |
+          curl --fail --silent --show-error \
+            "${SUPABASE_URL}/rest/v1/portfolio_embeddings?select=id&limit=1" \
+            --header "apikey: ${SUPABASE_ANON_KEY}" \
+            --header "Authorization: Bearer ${SUPABASE_ANON_KEY}"
+          echo "Keepalive ping sent — Supabase project remains active."
