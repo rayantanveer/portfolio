@@ -31,7 +31,9 @@ The portfolio simultaneously IS the project demonstrating RAG.
 | LLM              | Gemini 2.5 Flash (server-side only).                  |
 |                  | Free tier limits: 10 RPM / 250 RPD.                   |
 | Email            | Resend (server-side only, footer contact form)        |
-| Content          | Git-based Markdown + JSON in /content directory       |
+| Content          | Authored as Markdown + JSON in /content directory.    |
+|                  | Served via pre-generated JSON at build time            |
+|                  | (scripts/generate-content.ts → lib/content/.generated) |
 
 ---
 
@@ -134,10 +136,9 @@ portfolio/
 ├── .github/workflows/
 │   ├── deploy.yml          # push to main → Cloudflare Workers
 │   ├── embed.yml           # changes to content/** → re-run embed script
-│   └── keepalive.yml       # scheduled 5-day cron; fires a read-only HTTP
-│                           # request against portfolio_embeddings (anon key)
-│                           # to prevent Supabase free-tier auto-pause.
-│                           # No Node.js setup or npm steps.
+│   └── keepalive.yml       # scheduled 5-day cron; uses Supabase JS SDK
+│                           # to ping portfolio_embeddings and prevent
+│                           # free-tier auto-pause.
 ├── app/
 │   ├── layout.tsx
 │   ├── page.tsx            # Home — hero, Q&A about, education timeline
@@ -180,14 +181,18 @@ portfolio/
 │   ├── skills.json
 │   └── education.json
 ├── lib/
-│   ├── content/loader.ts
-│   ├── proxenos/
-│   │   ├── chunker.ts
-│   │   ├── embeddings.ts
-│   │   ├── retrieval.ts
-│   │   └── prompt.ts
-│   └── supabase/client.ts
+│   ├── content/
+│   │   ├── loader.ts       # Imports pre-generated JSON — zero fs usage
+│   │   └── .generated/     # Build artifact (gitignored)
+│   ├── proxenos/           # planned — implemented in Step 5
+│   │   ├── chunker.ts      # planned
+│   │   ├── embeddings.ts   # planned
+│   │   ├── retrieval.ts    # planned
+│   │   └── prompt.ts       # planned
+│   └── supabase/           # planned — implemented in Step 5
+│       └── client.ts       # planned
 ├── scripts/
+│   ├── generate-content.ts # Build-time markdown → JSON processor
 │   └── embed.ts            # npm run embed
 ├── types/
 │   ├── project.ts

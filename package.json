@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "generate-content": "tsx scripts/generate-content.ts",
-    "dev": "tsx scripts/generate-content.ts && next dev --turbopack",
-    "build": "tsx scripts/generate-content.ts && next build",
+    "predev": "npm run generate-content",
+    "dev": "next dev --turbopack",
+    "prebuild": "npm run generate-content",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "tsx scripts/generate-content.ts && opennextjs-cloudflare build && wrangler deploy",
-    "preview": "tsx scripts/generate-content.ts && opennextjs-cloudflare build && wrangler dev",
+    "deploy": "opennextjs-cloudflare build && wrangler deploy",
+    "preview": "opennextjs-cloudflare build && wrangler dev",
     "embed": "tsx scripts/embed.ts"
   },
   "keywords": [],

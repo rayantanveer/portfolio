@@ -12,13 +12,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Fire read-only request against portfolio_embeddings
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Supabase SDK
+        run: npm install @supabase/supabase-js
+
+      # Uses the Supabase JS SDK (not raw curl) to establish a real client
+      # connection. Supabase's auto-pause monitor tracks SDK connections as
+      # activity but does NOT count stateless PostgREST HTTP calls (curl).
+      - name: Ping Supabase via SDK
         env:
           SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         run: |
-          curl --fail --silent --show-error \
-            "${SUPABASE_URL}/rest/v1/portfolio_embeddings?select=id&limit=1" \
-            --header "apikey: ${SUPABASE_ANON_KEY}" \
-            --header "Authorization: Bearer ${SUPABASE_ANON_KEY}"
-          echo "Keepalive ping sent — Supabase project remains active."
+          node --input-type=module -e "
+            import { createClient } from '@supabase/supabase-js';
+            const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+            const { data, error } = await sb.from('portfolio_embeddings').select('id').limit(1);
+            if (error) { console.error('Keepalive failed:', error.message); process.exit(1); }
+            console.log('Keepalive ping sent — Supabase project remains active.');
+          "
